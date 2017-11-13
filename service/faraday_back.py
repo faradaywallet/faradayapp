@@ -1,16 +1,24 @@
 #!/usr/bin/env python
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import cc_crypt
+import cc_crypt, db_connection
+
+secret_key = cc_crypt.generate_key()
 
 class faraday_serv(BaseHTTPRequestHandler):
     ''' HTTP request handlers for Faraday Wallet application '''
 
     def do_headers(self):
-        ''' Define headers '''
+        ''' Define GET/POST headers '''
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
+
+    def redirect(self, location):
+        self.send_response(302)
+        self.send_header('Location', location)
+        self.end_headers()
+        return
 
     def do_GET(self):
         f = open('../view/index.html')  # Open main page
@@ -34,17 +42,18 @@ class faraday_serv(BaseHTTPRequestHandler):
         # dec_cc_num = cc_crypt.decrypt(secret_key, enc_cc_num)
         # print (dec_cc_num)
 
+        db_connection.connect_DB('127.0.0.1', 3310, 'root', 'cybr200', 'faraday', enc_cc_num)
+        
         return
 
     def do_HEAD(self):
         self._set_headers()
 
 def run(server_class=HTTPServer, handler_class=faraday_serv, port=8080):
-    secret_key = cc_crypt.generate_key()
     server_address = ('', port)
-    httpd = server_class(server_address, handler_class)
+    http = server_class(server_address, handler_class)
     print('Starting connection...')
-    httpd.serve_forever()
+    http.serve_forever()
 
 if __name__ == "__main__":
     run()
