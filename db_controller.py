@@ -1,3 +1,5 @@
+__author__ = 'Bren'
+
 import pymysql.cursors
 
 def connect_DB(c_host, c_port, c_user, c_password, c_db, enc_cc_num):
