@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-  <header>Faraday Wallet</header>
-  <body>
-      <form method='POST'>
-      <input type="text" width="100" name="creditCard" />
-      <button type="submit">Submit</button>
+<head>
+    <meta charset="UTF-8">
+    <title>Faraday Wallet</title>
+    <link href="../static/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../static/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+
+    <form class="form-signin" action='/add' name='register' method='POST'>
+        <a href="/add" class="btn btn-lg btn-primary btn-block">Add a Card</a>
     </form>
-  </body>
+</div>
+
+
+</body>
 </html>

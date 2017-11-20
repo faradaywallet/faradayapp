@@ -2,9 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Faraday Wallet</title>
+    <link href="../static/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../static/style.css" rel="stylesheet">
 </head>
+
 <body>
-$END$
+
+<div class="container">
+
+    <form class="form-signin" action='/add' name='add' method='POST'>
+        <h2 class="form-signin-heading">Add credit card</h2>
+
+        <label for="inputCard" class="sr-only">Credit Card Number</label>
+        <input type="card" name="card" id="inputCard" class="form-control" placeholder="################" required autofocus>
+
+        <label for="inputNotes" class="sr-only">Notes</label>
+        <textarea type="notes" name="notes" id="inputNotes" class="form-control" placeholder="Additional notes" required></textarea>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" name="add" value="CardRedirect">Add</button>
+
+    </form>
+</div>
 </body>
 </html>
