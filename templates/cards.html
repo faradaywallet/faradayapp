@@ -29,8 +29,8 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav navbar-right">
-                      <li><a href="cards.html">My Cards</a></li>
-                      <li class="activeLink"><a href="profile.html">My Profile</a></li>
+                      <li class="activeLink"><a href="cards.html">My Cards</a></li>
+                      <li><a href="profile.html">My Profile</a></li>
                       <li><a href="login.html">Log out</a></li>
                   </ul>
                 </div><!-- /.navbar-collapse -->
@@ -40,34 +40,67 @@
 </div>
 <div class="container">
   <div class="contentSection">
-    <h1>Profile</h1>
-    <br />
-    <div class="row profileSection">
-      <div class="col-sm-4 profileTitle">
-        <h3>Username</h3>
+    <div class="row cardContainer">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>AMEX</h2>
+        </div>
       </div>
-      <div class="col-sm-8">
-        <span id="username">Matt (I would totally use my name as a username xD)</span>
+      <div class="row">
+        <div class="col-md-4">
+          <label>Card Number</label><br/>
+          <p id="cardNumber">1234-5678-9123</p>
+        </div>
+        <div class="col-md-4">
+          <label>CVC</label><br/>
+          <p id="cvc">999</p>
+        </div>
+        <div class="col-md-4">
+          <label>Valid Until</label><br/>
+          <p id="expireDate">11-11-2021</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label>Notes</label>
+          <p id="cardNotes">This card is the best fam</p>
+        </div>
       </div>
     </div>
-    <div class="row profileSection">
-      <div class="col-sm-4 profileTitle">
-        <h3>Password</h3>
+    <div class="row cardContainer">
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Chase</h2>
+        </div>
       </div>
-      <div class="col-sm-8">
-        <button type="button" class="btn btn-primary my-btnLive">Change Password</button>
+      <div class="row">
+        <div class="col-md-4">
+          <label>Card Number</label><br/>
+          <p id="cardNumber">1234-5678-9123</p>
+        </div>
+        <div class="col-md-4">
+          <label>CVC</label><br/>
+          <p id="cvc">999</p>
+        </div>
+        <div class="col-md-4">
+          <label>Valid Until</label><br/>
+          <p id="expireDate">11-11-2021</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label>Notes</label>
+          <p id="cardNotes">This card is the best fam</p>
+        </div>
       </div>
     </div>
-    <div class="row profileSection">
-      <div class="col-sm-4 profileTitle">
-        <h3>Email</h3>
-      </div>
-      <div class="col-sm-8">
-        <span id="username">matt@matt.com</span>
-        <a href="#">Edit</a>
-      </div>
-    </div>
+    <form class="form-signin" action='/add' name='register' method='POST'>
+        <a href="/add" class="btn btn-lg btn-primary btn-block">Add a Card</a>
+    </form>
   </div>
 </div>
+
+
+
 </body>
 </html>

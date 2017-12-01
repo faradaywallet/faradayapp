@@ -1,0 +1,241 @@
+/*--------------------------------------------------------------
+Font Face/ Google Font
+------------------------------------------------------------- */
+@import url(https://fonts.googleapis.com/css?family=Bitter:400,700);
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,200,300,500);
+
+
+/*--------------------------------------------------------------
+Styles
+----------------------------------------------------------------*/
+html, body {
+  height: 100%;
+}
+h1 {
+  color:white;
+  font-size:50px;
+}
+.draggable {
+  height: 40px;
+  width: 100%;
+  position: absolute;
+  -webkit-app-region: drag;
+}
+.settings, .closes {
+    cursor: pointer;
+    display: inline-block;
+    height: 32px;
+    position: absolute;
+    text-indent: -10000px;
+    top: 6px;
+    width: 32px;
+    z-index: 1000;
+    -webkit-app-region: no-drag;
+}
+.settings {
+  background: transparent url(../images/settings.png) no-repeat 4px 4px;
+  background-size: 24px 24px;
+  right: 38px;
+  box-sizing: border-box;
+}
+.closes {
+    background: transparent url(../images/close.png) no-repeat 4px 4px;
+    background-size: 24px 24px;
+    right: 6px;
+    box-sizing: border-box;
+}
+.body-wrap{
+    background-color: #202020;
+    text-align: center;
+    background-size: cover;
+    font-family: 'Raleway', sans-serif;
+    min-height:100%;
+    position:relative;
+    display: table;
+    width: 100%;
+}
+.signup-wrap {
+  background-color: #2d2d2d;
+  text-align: center;
+  background-size: cover;
+  font-family: 'Raleway', sans-serif;
+  position:relative;
+  display: table;
+  width: 100%;
+}
+.login-wrap{
+  display: table-cell;
+  vertical-align: middle;
+}
+.login-wrap a:hover{
+    text-decoration: none;
+    color: #cb0000;
+}
+.login-wrap img.logo{
+    display: block;
+    margin: 0 auto;
+}
+.login-wrap ul{
+    margin:0;
+    padding: 0;
+    color: #fff;
+}
+.login-wrap ul li{
+    display: inline;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin: 0 10px;
+}
+.login-wrap ul li a{
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+.main-content {
+    margin-top: 30px;
+}
+.login-forms {
+    width: 30%;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+.login-forms input {
+    padding: 24px;
+    border: 0;
+    margin-bottom: 14px;
+    height: 60px;
+}
+.login-forms .checkbox input{
+    height: auto;
+}
+.login-forms .checkbox label {
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+    margin-top: 10px;
+    letter-spacing: 1px;
+}
+.login-forms button.submit-form {
+    background: #005b5b;
+    border: 0;
+    box-shadow: none;
+    text-shadow: none;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: bolder;
+    padding: 15px 50px;
+    letter-spacing: 2px;
+    margin-top: 10px;
+
+    /* causes fade effect */
+    -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+}
+
+.login-forms button.submit-form:hover {
+  background: #00b2b2;
+}
+.main-content p a,
+.main-content p{
+    color: #fff;
+    margin-top: 20px;
+}
+.main-content p a{
+    margin: 0 10px;
+}
+
+footer, .login-wrap:after {
+  /* .push must be the same height as footer */
+    height: 142px;
+}
+footer{
+    width:100%;
+    height:100px;
+    position:absolute;
+    bottom:0;
+    left:0;
+}
+footer ul{
+    margin: 0;
+    padding: 0;
+    color: #fff;
+}
+footer ul li{
+    display: inline;
+    border-right: 1px solid #fff;
+    padding: 0 10px;
+}
+footer ul li:nth-child(7){
+    border: 0;
+}
+footer ul li a{
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+}
+footer a:hover, .main-content a:hover {
+	color:#00b274;
+	text-decoration:underline;
+}
+/*--------------------------------------------------------------
+Media Queries
+--------------------------------------------------------------*/
+
+/*==========  Non-Mobile First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+    .login-forms {
+        width: 45%;
+    }
+    footer ul li a{
+        font-size: 12px;
+    }
+}
+
+/* Custom, iPhone Retina - remove this if not included */
+@media only screen and (max-width : 480px) {
+    .body-wrap{
+        padding: 40px 45px;
+    }
+    .login-forms{
+        width: 100%;
+    }
+    .main-content p a, .main-content p{
+        font-size: 14px;
+    }
+    footer ul li{
+        border:0;
+        padding: 0 5px;
+    }
+}
+@media only screen and (max-width: 320px) {
+    .body-wrap{
+        padding: 40px 30px;
+    }
+    .login-forms{
+        width: 100%;
+    }
+    .main-content p a, .main-content p{
+        font-size: 12px;
+    }
+    footer ul li{
+        border:0;
+        padding: 0 5px;
+    }
+}
