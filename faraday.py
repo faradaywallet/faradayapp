@@ -8,8 +8,8 @@ db = FaradayDB('localhost', 3310, 'root', 'cybr200', 'faraday')
 
 @app.route('/')
 def index():
-    print('Opening index')
-    return render_template('index.html')
+    print('Opening index/login')
+    return render_template('login.html')
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -26,12 +26,19 @@ def register():
         db.test_insert_user(values=(name, email))
     return render_template('register.html')
 
+@app.route('/cards', methods=['POST', 'GET'])
+def cards():
+    print('SERVER/LOG: Opening cards page')
+    # TODO: User authentication for accessing user cards
+    # if authenticate():
+    db.test_select_credit()
+    return render_template('cards.html')
+
 @app.route('/profile', methods=['POST', 'GET'])
 def profile():
     print('SERVER/LOG: Opening profile page')
     # TODO: User authentication for accessing user profile
     # if authenticate():
-    db.test_select_credit()
     return render_template('profile.html')
 
 @app.route('/add', methods=['POST', 'GET'])
