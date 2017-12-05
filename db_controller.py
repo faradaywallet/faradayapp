@@ -3,7 +3,6 @@ __author__ = 'Bren'
 import pymysql.cursors
 
 class FaradayDB:
-
     def __init__(self, c_host, c_port, c_user, c_password, c_db):
         self.connection = ''
         self.c_host = c_host
@@ -33,8 +32,8 @@ class FaradayDB:
 
     def insert_credit(self, values):
         insert_statement = (
-            "INSERT INTO card (userid, cardid, createDate, salt, auth, symmetricBox)"
-            "VALUE (%s, %s, %s, %s, %s, %s)"
+            "INSERT INTO card (userid, payload)"
+            "VALUE (%s, %s)"
         )
         self.insert_row(insert_statement, values)
 
@@ -53,12 +52,16 @@ class FaradayDB:
     def select_data(self, select_statement, value):
         self.start()
         data = self.connection.cursor()
-        data.execute(select_statement, value)
-        print('DBCONTROL/SUCCESS: Select query successful:', select_statement, value)
+        try:
+            data.execute(select_statement, value)
+            print('DBCONTROL/SUCCESS: Select query successful:', select_statement, value)
+        except:
+            print('DBCONTROL/FAIL: Select query failed:', select_statement)
         data.close()
         self.close()
         return data
 
+    # TODO: Consider refactoring the following:
     def get_session_key(self, user):
         select_statement = ('SELECT auth FROM user WHERE user=%s')
         data = self.select_data(select_statement, user)
@@ -76,6 +79,18 @@ class FaradayDB:
         data = self.select_data(select_statement, user)
         salt = data.fetchone()["salt"]
         return salt
+
+    def get_email(self, user):
+        select_statement = ('SELECT email FROM user where user=%s')
+        data = self.select_data(select_statement, user)
+        email = data.fetchone()["email"]
+        return email
+
+    def get_payloads(self, user):
+        select_statement = ('SELECT payload FROM card where userid=%s')
+        data = self.select_data(select_statement, user)
+        payloads = data.fetchall()
+        return payloads
 
     def close(self):
         print('DBCONTROL/LOG: Closing db connection')

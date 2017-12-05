@@ -44,8 +44,11 @@
     <form class="form-signin" action='/add' name='add' method='POST'>
         <h2 class="form-signin-heading">Add credit card</h2>
 
+        <label for="inputCardName" class="sr-only">Credit Card Number</label>
+        <input type="cardname" name="cardname" id="inputCardName" class="form-control" placeholder="Card Name" required autofocus>
+
         <label for="inputCard" class="sr-only">Credit Card Number</label>
-        <input type="card" name="card" id="inputCard" class="form-control" placeholder="16 digit number" required autofocus>
+        <input type="card" name="card" id="inputCard" class="form-control" placeholder="16 digit number" required>
 
         <label for="CVC" class="sr-only">CVC</label>
         <input type="cvc" name="cvc" id="CVC" class="form-control" placeholder="CVC" required>

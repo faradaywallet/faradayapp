@@ -63,7 +63,7 @@ class Encrypt():
 
     # Encrypts a payload with the user's symmetric key. Returns the encrypted payload.
     def encrypt_payload(self, symKey, payload):
-        payload = payload.encode()
+        # payload = payload.encode()
         nonce = utils.random(secret.SecretBox.NONCE_SIZE)
 
         box = secret.SecretBox(symKey)

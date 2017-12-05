@@ -3,7 +3,7 @@ __author__ = 'Bren'
 from flask import Flask, render_template, Response, request, redirect, url_for, session
 from db_controller import FaradayDB
 from encrypt import Encrypt
-import base64, os, datetime
+import base64, os, datetime, json
 
 app = Flask('__main__')
 db = FaradayDB('localhost', 3310, 'root', 'cybr200', 'faraday') # TODO: Find out a way to hide database connection information
@@ -22,7 +22,7 @@ def index():
         user = request.form['username']
         pwd = request.form['password']
 
-        # TODO: Session validation
+        # TODO: Session validation, password shouldn't be stored anywhere
         try:
             symmetric_box = base64.b64decode(db.get_symmetric_box(user))
             salt = base64.b64decode(db.get_salt(user))
@@ -35,7 +35,9 @@ def index():
             return redirect("/")
 
         print('SERVER/LOG: Login OK')
+        session['symkey'] = Encrypt.decrypt_key(symmetric_box, pwd.encode(), salt)
         session['username'] = request.form['username']
+
         return redirect('/cards')
 
     return render_template('login.html')
@@ -62,33 +64,54 @@ def register():
 @app.route('/cards', methods=['POST', 'GET'])
 def cards():
     print('SERVER/LOG: Opening cards page')
-    # TODO: User authentication for accessing user cards
-    if 'username' in session:
-        print('SERVER/LOG: Logged in as', session['username'])
-
-    # if authenticate():
-    # db.test_select_credit()
-    return render_template('cards.html')
+    user_cards = []
+    # TODO: Decryption logic for cards
+    try:
+        if 'username' in session:
+            print('SERVER/LOG: Logged in as', session['username'])
+            try:
+                payloads = db.get_payloads(session['username'])
+                print(payloads)
+                for payload in payloads:
+                    user_cards.append(json.loads(Encrypt.decrypt_payload(session['symkey'], base64.b64decode(payload["payload"]))))
+            except:
+                print('SERVER/LOG: No cards found for', session['username'])
+        else:
+            return redirect("/")
+    except:
+        return redirect("/")
+    return render_template('cards.html', user_cards=user_cards)
 
 @app.route('/profile', methods=['POST', 'GET'])
 def profile():
     print('SERVER/LOG: Opening profile page')
+
     # TODO: User authentication for accessing user profile
-    # if authenticate():
-    return render_template('profile.html')
+    try:
+        if 'username' in session:
+            email = db.get_email(session['username'])
+        else:
+            return redirect("/")
+    except:
+        return redirect("/")
+
+    return render_template('profile.html', username=session['username'], email=email)
 
 @app.route('/add', methods=['POST', 'GET'])
 def add():
     print('SERVER/LOG: Opening add cards page')
     if request.method == 'POST':
-        print('SERVER/LOG: Credit card added by user')
-        ccnum = request.form['card']
-        notes = request.form['notes']
-        print(ccnum)
-        print(notes)
+        print('SERVER/LOG: Credit card added by user at', str(timestamp))
+        payload = {'cardname': request.form['cardname'],
+                    'ccnum': request.form['card'],
+                   'expdate': request.form['expdate'],
+                   'cvc': request.form['cvc'],
+                   'notes': request.form['notes']}
         # TODO: Server side logic to encrypt credit card and notes using user key
-        db.test_insert_credit(values=(ccnum, notes))
-        return redirect(url_for('profile'))
+        json_payload_string = json.dumps(payload)
+        encrypted_payload = Encrypt.encrypt_payload(session['symkey'], json_payload_string.encode())
+        db.insert_credit(values=(session['username'], base64.b64encode(encrypted_payload)))
+        return redirect(url_for('cards'))
     return render_template('add.html')
 
 if __name__ == '__main__':
