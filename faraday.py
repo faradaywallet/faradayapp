@@ -14,6 +14,10 @@ app.secret_key = os.urandom(24)
 @app.route('/', methods=['POST', 'GET'])
 def index():
     print('Opening index/login')
+
+    # Wipe session on opening
+    session.pop('username', None)
+
     if request.method == 'POST':
         user = request.form['username']
         pwd = request.form['password']
@@ -31,8 +35,6 @@ def index():
             return redirect("/")
 
         print('SERVER/LOG: Login OK')
-
-
         session['username'] = request.form['username']
         return redirect('/cards')
 
@@ -61,6 +63,9 @@ def register():
 def cards():
     print('SERVER/LOG: Opening cards page')
     # TODO: User authentication for accessing user cards
+    if 'username' in session:
+        print('SERVER/LOG: Logged in as', session['username'])
+
     # if authenticate():
     # db.test_select_credit()
     return render_template('cards.html')

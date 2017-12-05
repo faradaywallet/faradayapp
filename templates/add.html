@@ -3,11 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Faraday Wallet</title>
-    <link href="../static/bootstrap.min.css" rel="stylesheet"/>
-    <link href="../static/style.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="../static/bootstrap.min.css">
+	<link rel="stylesheet" href="../static/style.css">
 </head>
 
 <body>
+
+<div id="tf-home">
+    <div class="overlay">
+        <div id="sticky-anchor"></div>
+        <nav id="tf-menu" class="navbar navbar-default">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand logo" href="/cards">FaradayWallet</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav navbar-right">
+                      <li class="activeLink"><a href="/cards">My Cards</a></li>
+                      <li><a href="/profile">My Profile</a></li>
+                      <li><a href="/">Log out</a></li>
+                  </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+    </div>
+</div>
 
 <div class="container">
 
@@ -15,10 +45,16 @@
         <h2 class="form-signin-heading">Add credit card</h2>
 
         <label for="inputCard" class="sr-only">Credit Card Number</label>
-        <input type="card" name="card" id="inputCard" class="form-control" placeholder="################" required autofocus>
+        <input type="card" name="card" id="inputCard" class="form-control" placeholder="16 digit number" required autofocus>
+
+        <label for="CVC" class="sr-only">CVC</label>
+        <input type="cvc" name="cvc" id="CVC" class="form-control" placeholder="CVC" required>
+
+        <label for="expdate" class="sr-only">Expiration Date</label>
+        <input type="expdate" name="expdate" id="expdate" class="form-control" placeholder="Expiration date: mm/dd/yy" required>
 
         <label for="inputNotes" class="sr-only">Notes</label>
-        <textarea type="notes" name="notes" id="inputNotes" class="form-control" placeholder="Additional notes" required></textarea>
+        <textarea type="notes" name="notes" id="inputNotes" class="form-control" placeholder="Additional notes"></textarea>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit" name="add" value="CardRedirect">Add</button>
 
