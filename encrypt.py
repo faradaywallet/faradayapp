@@ -1,6 +1,7 @@
 from nacl import secret, pwhash, utils
+import os
 
-class encrypt():
+class Encrypt():
     # Generates a new salt
     def generate_salt(self):
         salt = utils.random(pwhash.SCRYPT_SALTBYTES)
@@ -20,6 +21,10 @@ class encrypt():
         box = secret.SecretBox(key)
         encrypted = box.encrypt(userKey, nonce)
         return encrypted
+
+    # Generate a session key for a Flask session - must be used in conjunction with user's symmetric key for authorization process
+    def generate_session_key(self):
+        return os.urandom(24)
 
     # TODO: BEING WORKED ON. PLS IGNORE. BUT IT MIGHT WORK.
     def changed_password(self, box, oldPass, newPass, salt):
@@ -58,6 +63,7 @@ class encrypt():
 
     # Encrypts a payload with the user's symmetric key. Returns the encrypted payload.
     def encrypt_payload(self, symKey, payload):
+        payload = payload.encode()
         nonce = utils.random(secret.SecretBox.NONCE_SIZE)
 
         box = secret.SecretBox(symKey)
@@ -71,6 +77,15 @@ class encrypt():
         try:
             box = secret.SecretBox(symKey)
             contents = box.decrypt(payload)
-            return contents
+            return contents.decode()
         except:
             return -1
+
+
+
+
+
+
+# dynamicAdd = [string of stuff to add]
+# cards = soup.find(id="cardList")
+# cards.append(dynamicAdd)

@@ -39,7 +39,7 @@
     </div>
 </div>
 <div class="container">
-  <div class="contentSection">
+  <div id="cardList" class="contentSection">
     <div class="row cardContainer">
       <div class="row">
         <div class="col-md-12">
@@ -66,25 +66,32 @@
           <p id="cardNotes">This card is the best fam</p>
         </div>
       </div>
+      <a href="/add" class="btn btn-lg btn-primary btn-block">Edit Card</a>
+      <a href="/add" class="btn btn-lg btn-danger btn-block">Delete</a>
     </div>
     <div class="row cardContainer">
+      <input type="hidden" name="cardID">
       <div class="row">
         <div class="col-md-12">
           <h2>Chase</h2>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label>Card Number</label><br/>
           <p id="cardNumber">1234-5678-9123</p>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label>CVC</label><br/>
           <p id="cvc">999</p>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <label>Valid Until</label><br/>
           <p id="expireDate">11-11-2021</p>
+        </div>
+        <div class="col-md-3">
+          <a href="/add" class="btn btn-lg btn-primary btn-block">Edit Card</a>
+          <a href="/add" class="btn btn-lg btn-danger btn-block">Delete</a>
         </div>
       </div>
       <div class="row">
@@ -94,6 +101,7 @@
         </div>
       </div>
     </div>
+    <div class="row cardContainer"><input type="hidden" name="cardID"><div class="row"><div class="col-md-12"><h2 id="cardType">CARD_TYPE</h2></div></div><div class="row"><div class="col-md-3"><label>Card Number</label><br/><p id="cardNumber">1234-5678-9123</p></div><div class="col-md-3"><label>CVC</label><br/><p id="cvc">999</p></div><div class="col-md-3"><label>Valid Until</label><br/><p id="expireDate">01-02-2013</p></div><div class="col-md-3"><a href="/add" class="btn btn-lg btn-primary btn-block">Edit Card</a><a href="/add" class="btn btn-lg btn-danger btn-block">Delete</a></div></div><div class="row"><div class="col-md-12"><label>Notes</label><p id="cardNotes">[Notes]</p></div></div></div>
     <form class="form-signin" action='/add' name='register' method='POST'>
         <a href="/add" class="btn btn-lg btn-primary btn-block">Add a Card</a>
     </form>

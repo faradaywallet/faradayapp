@@ -38,34 +38,6 @@ class FaradayDB:
         )
         self.insert_row(insert_statement, values)
 
-    def test_insert_user(self, values):
-        insert_statement = (
-            "INSERT INTO test_table (name, email)"
-            "VALUE (%s, %s)"
-        )
-        self.insert_row(insert_statement, values)
-
-    def test_insert_credit(self, values):
-        insert_statement = (
-            "INSERT INTO test_credit (credit, notes)"
-            "VALUE (%s, %s)"
-        )
-        self.insert_row(insert_statement, values)
-
-    def test_select_credit(self):
-        print('DBCONTROL/LOG: Starting db connection')
-        select_statement = (
-            "SELECT * FROM test_credit"
-        )
-        self.start()
-        rows = self.connection.cursor()
-        rows.execute(select_statement)
-        print('DBCONTROL/SUCCESS: Select query successful:', select_statement)
-        for data in rows:
-            print(data)
-        rows.close()
-        self.close()
-
     def insert_row(self, insert_statement, values):
         print('DBCONTROL/LOG: Starting db connection')
         self.start()
@@ -75,8 +47,11 @@ class FaradayDB:
                 self.connection.commit()
                 print('DBCONTROL/SUCCESS: Insert successful:', values)
             except:
-                print('DBCONTROL/FAIL: Unable to insert into database')
+                print('DBCONTROL/FAIL: Unable to insert into database:', values)
         self.close()
+
+    # def select_user(self):
+
 
     def close(self):
         print('DBCONTROL/LOG: Closing db connection')

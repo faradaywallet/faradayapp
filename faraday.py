@@ -2,9 +2,10 @@ __author__ = 'Bren'
 
 from flask import Flask, render_template, Response, request, redirect, url_for, session
 from db_controller import FaradayDB
+from encrypt import Encrypt
 
 app = Flask('__main__')
-db = FaradayDB('localhost', 3310, 'root', 'cybr200', 'faraday')
+db = FaradayDB('localhost', 3310, 'root', 'cybr200', 'faraday') # TODO: Find out a way to hide database connection information
 
 @app.route('/')
 def index():
