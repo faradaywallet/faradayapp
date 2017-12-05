@@ -56,7 +56,3 @@ class FaradayDB:
     def close(self):
         print('DBCONTROL/LOG: Closing db connection')
         self.connection.close()
-
-if __name__ == '__main__':
-    db = FaradayDB('localhost', 3310, 'root', 'cybr200', 'faraday')
-    db.test_select_credit()
