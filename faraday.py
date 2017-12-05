@@ -2,17 +2,40 @@ __author__ = 'Bren'
 
 from flask import Flask, render_template, Response, request, redirect, url_for, session
 from db_controller import FaradayDB
-import datetime
 from encrypt import Encrypt
+import base64, os, datetime
 
 app = Flask('__main__')
 db = FaradayDB('localhost', 3310, 'root', 'cybr200', 'faraday') # TODO: Find out a way to hide database connection information
 Encrypt = Encrypt()
 timestamp = datetime.datetime.now()
+app.secret_key = os.urandom(24)
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def index():
     print('Opening index/login')
+    if request.method == 'POST':
+        user = request.form['username']
+        pwd = request.form['password']
+
+        # TODO: Session validation
+        try:
+            symmetric_box = base64.b64decode(db.get_symmetric_box(user))
+            salt = base64.b64decode(db.get_salt(user))
+        except:
+            print('SERVER/LOG: Username not found')
+            return redirect("/")
+
+        if Encrypt.decrypt_key(symmetric_box, pwd.encode(), salt) == -1:
+            print('SERVER/LOG: Incorrect password')
+            return redirect("/")
+
+        print('SERVER/LOG: Login OK')
+
+
+        session['username'] = request.form['username']
+        return redirect('/cards')
+
     return render_template('login.html')
 
 @app.route('/register', methods=['POST', 'GET'])
@@ -24,13 +47,13 @@ def register():
         pwd = request.form['password']
         create_date = str(timestamp)
         print('SERVER/LOG: Account created by ', user, ' at ', create_date)
-        # TODO: Server side logic to salt and encrypt password
 
+        # TODO: Server side logic to salt and encrypt password
         salt = Encrypt.generate_salt()
         session_key = Encrypt.generate_session_key()
         sym_key_box = Encrypt.generate_key(pwd.encode(), salt)
 
-        values = (user, email, create_date, str(salt), str(session_key), str(sym_key_box))
+        values = (user, email, create_date, base64.b64encode(salt), base64.b64encode(session_key), base64.b64encode(sym_key_box))
         db.insert_user(values)
     return render_template('register.html')
 

@@ -50,8 +50,32 @@ class FaradayDB:
                 print('DBCONTROL/FAIL: Unable to insert into database:', values)
         self.close()
 
-    # def select_user(self):
+    def select_data(self, select_statement, value):
+        self.start()
+        data = self.connection.cursor()
+        data.execute(select_statement, value)
+        print('DBCONTROL/SUCCESS: Select query successful:', select_statement, value)
+        data.close()
+        self.close()
+        return data
 
+    def get_session_key(self, user):
+        select_statement = ('SELECT auth FROM user WHERE user=%s')
+        data = self.select_data(select_statement, user)
+        session_key = data.fetchone()["auth"]
+        return session_key
+
+    def get_symmetric_box(self, user):
+        select_statement = ('SELECT symmetricBox FROM user where user=%s')
+        data = self.select_data(select_statement, user)
+        symmetric_box = data.fetchone()["symmetricBox"]
+        return symmetric_box
+
+    def get_salt(self, user):
+        select_statement = ('SELECT salt FROM user where user=%s')
+        data = self.select_data(select_statement, user)
+        salt = data.fetchone()["salt"]
+        return salt
 
     def close(self):
         print('DBCONTROL/LOG: Closing db connection')

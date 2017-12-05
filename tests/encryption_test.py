@@ -1,4 +1,5 @@
 from encrypt import Encrypt
+import base64
 
 Encrypt = Encrypt()
 

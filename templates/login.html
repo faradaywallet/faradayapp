@@ -35,12 +35,12 @@
             </ul>
           </div>
           <div class="login-forms">
-            <form action="/cards">
+            <form action="/" method='POST'>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Username">
+                <input type="username" name="username" class="form-control" placeholder="Username" required autofocus>
               </div>
               <div class="form-group">
-                <input type="password" class="form-control" placeholder="Password">
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
               </div>
               <div class="checkbox">
                 <label>
