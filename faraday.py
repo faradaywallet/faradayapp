@@ -28,8 +28,7 @@ def index():
             salt = base64.b64decode(db.get_salt(user))
         except:
             print('SERVER/LOG: Username not found')
-            flash('The username/password was incorrect.')
-            #return redirect("/")
+            return redirect("/")
 
         if Encrypt.decrypt_key(symmetric_box, pwd.encode(), salt) == -1:
             print('SERVER/LOG: Incorrect password')
