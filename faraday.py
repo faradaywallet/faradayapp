@@ -4,14 +4,26 @@ from flask import Flask, render_template, Response, request, redirect, url_for, 
 from db_controller import FaradayDB
 from encrypt import Encrypt
 from logger import Logger
+from flask_sslify import SSLify
+from werkzeug.serving import make_ssl_devcert
 import base64, os, datetime, json
 
+make_ssl_devcert('key')
+
 app = Flask('__main__')
+sslify = SSLify(app)
 db = FaradayDB('localhost', 3310, 'root', 'cybr200', 'faraday') # TODO: Find out a way to hide database connection information
 Logger = Logger()
 Encrypt = Encrypt()
 timestamp = datetime.datetime.now()
 app.secret_key = os.urandom(24)
+
+@app.before_request
+def before_request():
+    if request.url.startswith('http://'):
+        url = request.url.replace('http://', 'https://', 1)
+        code = 301
+        return redirect(url, code=code)
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -118,4 +130,4 @@ def add():
     return render_template('add.html')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=80, debug=False, ssl_context=('key.crt', 'key.key'))
