@@ -37,6 +37,13 @@ class FaradayDB:
         )
         self.insert_row(insert_statement, values)
 
+    def insert_log(self, values):
+        insert_statement = (
+            "INSERT INTO transaction (utc, comment)"
+            "VALUE (%s, %s)"
+        )
+        self.insert_row(insert_statement, values)
+
     def insert_row(self, insert_statement, values):
         print('DBCONTROL/LOG: Starting db connection')
         self.start()

@@ -3,13 +3,27 @@ __author__ = 'Bren'
 from flask import Flask, render_template, Response, request, redirect, url_for, session
 from db_controller import FaradayDB
 from encrypt import Encrypt
+from logger import Logger
+from flask_sslify import SSLify
+from werkzeug.serving import make_ssl_devcert
 import base64, os, datetime, json
 
+make_ssl_devcert('key')
+
 app = Flask('__main__')
+sslify = SSLify(app)
 db = FaradayDB('localhost', 3310, 'root', 'cybr200', 'faraday') # TODO: Find out a way to hide database connection information
+Logger = Logger()
 Encrypt = Encrypt()
 timestamp = datetime.datetime.now()
 app.secret_key = os.urandom(24)
+
+@app.before_request
+def before_request():
+    if request.url.startswith('http://'):
+        url = request.url.replace('http://', 'https://', 1)
+        code = 301
+        return redirect(url, code=code)
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -37,6 +51,7 @@ def index():
         print('SERVER/LOG: Login OK')
         session['symkey'] = Encrypt.decrypt_key(symmetric_box, pwd.encode(), salt)
         session['username'] = request.form['username']
+        Logger.log("Login from " + session['username'])
 
         return redirect('/cards')
 
@@ -51,7 +66,6 @@ def register():
         pwd = request.form['password']
         create_date = str(timestamp)
         print('SERVER/LOG: Account created by ', user, ' at ', create_date)
-
         # TODO: Server side logic to salt and encrypt password
         salt = Encrypt.generate_salt()
         session_key = Encrypt.generate_session_key()
@@ -101,7 +115,8 @@ def profile():
 def add():
     print('SERVER/LOG: Opening add cards page')
     if request.method == 'POST':
-        print('SERVER/LOG: Credit card added by user at', str(timestamp))
+        # print('SERVER/LOG: Credit card added by user at', str(timestamp))
+        Logger.log("Credit card card added by " + session['username'])
         payload = {'cardname': request.form['cardname'],
                     'ccnum': request.form['card'],
                    'expdate': request.form['expdate'],
@@ -115,4 +130,4 @@ def add():
     return render_template('add.html')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=80, debug=False, ssl_context=('key.crt', 'key.key'))
