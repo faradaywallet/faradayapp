@@ -26,8 +26,9 @@ GETTING FARADAY WALLET RUNNING:
 	-run the faraday.py python file in your prefered method of running python
 	
 USING THE SYSTEM:
-	-system is set to run on port 3310, on http://127.0.0.1:5000/
-		-open your preffered web browser and go to http://localhost:5000/
+	-system is set to run on port 3310, on https://127.0.0.1:80/
+		-open your preffered web browser and go to https://localhost:80/
+		-you will have a security warning due to the self-signed CA
 		-register your new user
 		-after registering, click on the logo in the upper-left-hand corner to go back to the login screen.
 		-login with your user credentials
