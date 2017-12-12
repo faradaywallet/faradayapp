@@ -3,6 +3,7 @@
 Running the system:
 
 INSTALLING REQUIRED SW & LIBRARIES:
+	-run 'pip install flask' to install flask
 	-Ensure that python 3.4+ is installed 
 	-ensure that pymysql is installed by running 'pip install pymysql' in your command line
 	-MySQL Workbench was used for the DB. Visual Studio 2013 Redistributable will be needed to use MySQL Workbench.
