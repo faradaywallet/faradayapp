@@ -48,13 +48,13 @@
         <input type="cardname" name="cardname" id="inputCardName" class="form-control" placeholder="Card Name" required autofocus>
 
         <label for="inputCard" class="sr-only">Credit Card Number</label>
-        <input type="card" name="card" id="inputCard" class="form-control" placeholder="16 digit number" required>
+        <input type="card" pattern="^\d{16}$" name="card" id="inputCard" class="form-control" placeholder="16 digit number" required>
 
         <label for="CVC" class="sr-only">CVC</label>
-        <input type="cvc" name="cvc" id="CVC" class="form-control" placeholder="CVC" required>
+        <input type="cvc" pattern="[0-9][0-9][0-9][0-9]*" name="cvc" id="CVC" class="form-control" placeholder="CVC" required>
 
         <label for="expdate" class="sr-only">Expiration Date</label>
-        <input type="expdate" name="expdate" id="expdate" class="form-control" placeholder="Expiration date: mm/dd/yy" required>
+        <input type="expdate" pattern="^((0?[13578]|10|12)(-|\/)(([1-9])|(0[1-9])|([12])([0-9]?)|(3[01]?))(-|\/)((19)([2-9])(\d{1})|(20)([01])(\d{1})|([8901])(\d{1}))|(0?[2469]|11)(-|\/)(([1-9])|(0[1-9])|([12])([0-9]?)|(3[0]?))(-|\/)((19)([2-9])(\d{1})|(20)([01])(\d{1})|([8901])(\d{1})))$"  name="expdate" id="expdate" class="form-control" placeholder="Expiration date: mm/dd/yy" required>
 
         <label for="inputNotes" class="sr-only">Notes</label>
         <textarea type="notes" name="notes" id="inputNotes" class="form-control" placeholder="Additional notes"></textarea>

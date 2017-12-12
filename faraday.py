@@ -80,16 +80,28 @@ def cards():
     print('SERVER/LOG: Opening cards page')
     user_cards = []
     # TODO: Decryption logic for cards
+
+    if request.method == 'POST':
+        print("SERVER/LOG: Headers:\n", request.headers)
+        print("SERVER/LOG: Data:\n", request.data)
+        try:
+            print("SERVER/LOG: Form:\n", request.form['cardId'])
+            db.delete_card(request.form['cardId'])
+            return redirect("/cards")
+        except:
+            print("SERVER/FAIL: Unable to edit/delete card:\n")
+
     try:
         if 'username' in session:
             print('SERVER/LOG: Logged in as', session['username'])
             try:
-                payloads = db.get_payloads(session['username'])
-                print(payloads)
-                for payload in payloads:
-                    user_cards.append(json.loads(Encrypt.decrypt_payload(session['symkey'], base64.b64decode(payload["payload"]))))
+                # payloads = db.get_payloads(session['username'])
+                id_payloads = db.get_id_payload(session['username'])
+                print(id_payloads)
+                for payload in id_payloads:
+                    user_cards.append((json.loads(Encrypt.decrypt_payload(session['symkey'], base64.b64decode(payload["payload"]))), payload["id"]))
             except:
-                print('SERVER/LOG: No cards found for', session['username'])
+                print('SERVER/FAIL: No cards found for', session['username'])
         else:
             return redirect("/")
     except:

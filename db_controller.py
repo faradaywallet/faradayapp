@@ -99,6 +99,24 @@ class FaradayDB:
         payloads = data.fetchall()
         return payloads
 
+    def get_id_payload(self, user):
+        select_statement = ('SELECT id, payload FROM card where userid=%s')
+        data = self.select_data(select_statement, user)
+        id_payloads = data.fetchall()
+        return id_payloads
+
+    def delete_card(self, id):
+        delete_statement = ('DELETE FROM card WHERE id=%s')
+        self.start()
+        with self.connection.cursor() as cursor:
+            try:
+                cursor.execute(delete_statement, int(id))
+                self.connection.commit()
+                print('DBCONTROL/SUCCESS: Delete successful:', id)
+            except:
+                print('DBCONTROL/FAIL: Unable to delete:', id)
+        self.close()
+
     def close(self):
         print('DBCONTROL/LOG: Closing db connection')
         self.connection.close()

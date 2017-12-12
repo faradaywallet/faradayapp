@@ -40,113 +40,33 @@
 </div>
 <div class="container">
   <div id="cardList" class="contentSection">
-    <!--<div class="row cardContainer">-->
-      <!--<div class="row">-->
-        <!--<div class="col-md-12">-->
-          <!--<h2>AMEX</h2>-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--<div class="row">-->
-        <!--<div class="col-md-4">-->
-          <!--<label>Card Number</label><br/>-->
-          <!--<p id="cardNumber">1234-5678-9123</p>-->
-        <!--</div>-->
-        <!--<div class="col-md-4">-->
-          <!--<label>CVC</label><br/>-->
-          <!--<p id="cvc">999</p>-->
-        <!--</div>-->
-        <!--<div class="col-md-4">-->
-          <!--<label>Valid Until</label><br/>-->
-          <!--<p id="expireDate">11-11-2021</p>-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--<div class="row">-->
-        <!--<div class="col-md-12">-->
-          <!--<label>Notes</label>-->
-          <!--<p id="cardNotes">This card is the best fam</p>-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--<a href="/add" class="btn btn-lg btn-primary btn-block">Edit Card</a>-->
-      <!--<a href="/add" class="btn btn-lg btn-danger btn-block">Delete</a>-->
-    <!--</div>-->
-    <!--<div class="row cardContainer">-->
-      <!--<input type="hidden" name="cardID">-->
-      <!--<div class="row">-->
-        <!--<div class="col-md-12">-->
-          <!--<h2>Chase</h2>-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--<div class="row">-->
-        <!--<div class="col-md-3">-->
-          <!--<label>Card Number</label><br/>-->
-          <!--<p id="cardNumber">1234-5678-9123</p>-->
-        <!--</div>-->
-        <!--<div class="col-md-3">-->
-          <!--<label>CVC</label><br/>-->
-          <!--<p id="cvc">999</p>-->
-        <!--</div>-->
-        <!--<div class="col-md-3">-->
-          <!--<label>Valid Until</label><br/>-->
-          <!--<p id="expireDate">11-11-2021</p>-->
-        <!--</div>-->
-        <!--<div class="col-md-3">-->
-          <!--<a href="/add" class="btn btn-lg btn-primary btn-block">Edit Card</a>-->
-          <!--<a href="/add" class="btn btn-lg btn-danger btn-block">Delete</a>-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--<div class="row">-->
-        <!--<div class="col-md-12">-->
-          <!--<label>Notes</label>-->
-          <!--<p id="cardNotes">This card is the best fam</p>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-
-      <!--<div class="row cardContainer"><input type="hidden" name="cardID">-->
-          <!--<div class="row">-->
-              <!--<div class="col-md-12"><h2 id="cardType">CARD_TYPE</h2></div>-->
-          <!--</div>-->
-          <!--<div class="row">-->
-              <!--<div class="col-md-3"><label>Card Number</label><br/>-->
-                  <!--<p id="cardNumber">1234-5678-9123</p></div>-->
-              <!--<div class="col-md-3"><label>CVC</label><br/>-->
-                  <!--<p id="cvc">999</p></div>-->
-              <!--<div class="col-md-3"><label>Valid Until</label><br/>-->
-                  <!--<p id="expireDate">01-02-2013</p></div>-->
-              <!--<div class="col-md-3"><a href="/add" class="btn btn-lg btn-primary btn-block">Edit Card</a><a href="/add"-->
-                                                                                                            <!--class="btn btn-lg btn-danger btn-block">Delete</a>-->
-              <!--</div>-->
-          <!--</div>-->
-          <!--<div class="row">-->
-              <!--<div class="col-md-12"><label>Notes</label>-->
-                  <!--<p id="cardNotes">[Notes]</p></div>-->
-          <!--</div>-->
-      <!--</div>-->
-
       {% for card in user_cards %}
       <div class="row cardContainer"><input type="hidden" name="cardID">
           <div class="row">
-              <div class="col-md-12"><h2 id="cardType">{{card["cardname"]}}</h2></div>
+              <div class="col-md-12"><h2 name="cardname" id="cardType">{{card[0]["cardname"]}}</h2></div>
           </div>
           <div class="row">
-              <div class="col-md-3"><label>Card Number</label><br/>
-                  <p id="cardNumber">{{card["ccnum"]}}</p></div>
-              <div class="col-md-3"><label>CVC</label><br/>
-                  <p id="cvc">{{card["cvc"]}}</p></div>
-              <div class="col-md-3"><label>Valid Until</label><br/>
-                  <p id="expireDate">{{card["expdate"]}}</p></div>
-              <div class="col-md-3"><a href="/add" class="btn btn-lg btn-primary btn-block">Edit Card</a><a href="/add"
-                                                                                                            class="btn btn-lg btn-danger btn-block">Delete</a>
-              </div>
+
+              <form action='/cards' method='POST'>
+
+                  <div class="col-md-3"><label>Card Number</label><br/>
+                      <input style="display:none" name="cardId" value="{{card[1]}}">
+                      <p name="ccnum" id="cardNumber">{{card[0]["ccnum"]}}</p></div>
+                  <div class="col-md-3"><label>CVC</label><br/>
+                      <p name="cvc" id="cvc">{{card[0]["cvc"]}}</p></div>
+                  <div class="col-md-3"><label>Valid Until</label><br/>
+                      <p name="expdate" id="expireDate">{{card[0]["expdate"]}}</p></div>
+                  <div class="col-md-3">
+                      <button href="/cards" name='delete' class="btn btn-lg btn-danger btn-block">Delete</button>
+                  </div>
+              </form>
           </div>
           <div class="row">
               <div class="col-md-12"><label>Notes</label>
-                  <p id="cardNotes">{{card["notes"]}}</p></div>
+                  <p name="notes" id="cardNotes">{{card[0]["notes"]}}</p></div>
           </div>
       </div>
       {% endfor %}
-
-
       <form class="form-signin" action='/add' name='register' method='POST'>
         <a href="/add" class="btn btn-lg btn-primary btn-block">Add a Card</a>
     </form>
